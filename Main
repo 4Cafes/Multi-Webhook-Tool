@@ -1,0 +1,109 @@
+import sys
+import time
+import random
+import http.client
+import msvcrt
+import json
+
+def delete_webhook(webhook_url):
+    conn = http.client.HTTPSConnection("discord.com")
+    conn.request("DELETE", webhook_url)
+
+    response = conn.getresponse()
+    if response.status == 204:
+        print("Webhook URL deleted successfully.")
+    else:
+        print("Failed to delete webhook URL.")
+    conn.close()
+
+if sys.platform == 'win32':
+    import os
+    os.system("title Cafes Webhook Tools")
+else:
+    print("\033]0;Cafes Webhook Tools\007", end="")
+
+print(""" 
+   _____              ______   ______    _____ 
+  / ____|     /\     |  ____| |  ____|  / ____|
+ | |         /  \    | |__    | |__    | (___  
+ | |        / /\ \   |  __|   |  __|    \___ \ 
+ | |____   / ____ \  | |      | |____   ____) |
+  \_____| /_/    \_\ |_|      |______| |_____/ 
+ """)
+
+for i in range(1, 51):
+    time.sleep(0.1)
+    print(f"Loading: {i*2}%", end="\r")
+
+print(" " * 50)
+
+print("Option #1 : Webhook Spammer")
+print("Option #2 : Webhook Info")
+print("Option #3 : Webhook Deleter")
+option = input("Choose an option: ")
+
+
+
+if option == '1':
+    webhook_url = input("Discord Webhook URL: ")
+    messages = []
+    while True:
+        message = input("Message (type 'done' to finish): ")
+        if message == 'done':
+            break
+        messages.append(message)
+    delay = float(input("Delay between messages (in seconds): "))
+
+    random.shuffle(messages)
+    message_count = 0
+    print("Press V to stop (It has delay)")
+    while True:
+        message = random.choice(messages)
+        message_count += 1
+
+        conn = http.client.HTTPSConnection("discord.com")
+        payload = '{"content": "' + message + '"}'
+        headers = {'Content-Type': 'application/json'}
+
+        conn.request("POST", webhook_url, body=payload, headers=headers)
+
+        print(f"Message {message_count} sent.", end='\r')
+        time.sleep(delay)
+        if msvcrt.kbhit():
+            key = msvcrt.getch().decode("utf-8").lower()
+            if key == 'v':
+                break
+
+    print("Program terminated.")
+
+elif option == '2':
+    webhook_url = input("Discord Webhook URL: ")
+
+    conn = http.client.HTTPSConnection("discord.com")
+    conn.request("GET", webhook_url)
+
+    response = conn.getresponse()
+    data = response.read().decode("utf-8")
+    conn.close()
+
+    for i in range(1, 51):
+        time.sleep(0.1)
+        print(f"Loading: {i*2}%", end="\r")
+        time.sleep(0.1)
+    print(" " * 50)
+
+    webhook_info = json.loads(data)
+    print("Webhook Information:")
+    print(f"ID: {webhook_info['id']}")
+    print(f"Type: {webhook_info['type']}")
+    print(f"Name: {webhook_info['name']}")
+    print(f"URL: {webhook_info['url']}")
+    print(f"Channel ID: {webhook_info['channel_id']}")
+    print(f"Guild ID: {webhook_info['guild_id']}")
+    print(f"Token: {webhook_info['token']}")
+
+elif option == '3':
+    webhook_url = input("Discord Webhook URL: ")
+    delete_webhook(webhook_url)
+else:
+    print("Invalid option. Please choose either 1, 2, or 3.")
