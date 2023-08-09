@@ -16,6 +16,14 @@ def delete_webhook(webhook_url):
         print("Failed to delete webhook URL.")
     conn.close()
 
+def generate_invite_link(bot_user_id):
+    base_url = "https://discord.com/oauth2/authorize"
+    scope = "bot"
+    permissions = 8
+
+    invite_link = f"{base_url}?client_id={bot_user_id}&scope={scope}&permissions={permissions}"
+    return invite_link
+
 if sys.platform == 'win32':
     import os
     os.system("title Cafes Webhook Tools")
@@ -40,9 +48,8 @@ print(" " * 50)
 print("Option #1 : Webhook Spammer")
 print("Option #2 : Webhook Info")
 print("Option #3 : Webhook Deleter")
+print("Option #4 : Bot Invite Link Generator")
 option = input("Choose an option: ")
-
-
 
 if option == '1':
     webhook_url = input("Discord Webhook URL: ")
@@ -74,8 +81,6 @@ if option == '1':
             if key == 'v':
                 break
 
-    print("Program terminated.")
-
 elif option == '2':
     webhook_url = input("Discord Webhook URL: ")
 
@@ -105,5 +110,13 @@ elif option == '2':
 elif option == '3':
     webhook_url = input("Discord Webhook URL: ")
     delete_webhook(webhook_url)
+
+elif option == '4':
+    bot_user_id = input("Enter the bot's user ID: ")
+    invite_link = generate_invite_link(bot_user_id)
+    print("Invite link:")
+    print(invite_link)
+    input("Press Enter to exit...")
+
 else:
-    print("Invalid option. Please choose either 1, 2, or 3.")
+    print("Invalid option. Please choose either 1, 2, 3, or 4.")
