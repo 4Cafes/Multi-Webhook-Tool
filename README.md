@@ -25,4 +25,10 @@ These features are useful for various purposes, such as testing and managing Dis
 
 --------
 
-Overall, this code provides a versatile set of tools to interact with Discord webhooks, allowing you to send messages, retrieve information, and delete webhooks.
+Bot Invite Link Generator:
+
+This is a very simple tool where you give a bots user id and it will give you a invite link for the bot with the administator permissions selected for you already.
+
+--------
+
+Overall, this code provides a versatile set of tools to interact with Discord webhooks, allowing you to send messages, retrieve information, delete webhooks, and make bot invites.
