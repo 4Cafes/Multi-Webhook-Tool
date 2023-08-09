@@ -1,5 +1,12 @@
 Hello! This is my webhook tool made fully by Cafes. Here is all its features.
 
+What you need to install for this to work :
+
+pip install time
+pip install random (I think i dont remember)
+pip install http.client
+pip install msvcrt
+pip install json
 --------
 
 Webhook Spammer:
